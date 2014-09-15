@@ -73,7 +73,9 @@ if __name__ == "__main__":
     if len(update_list) > 0:
 	print >>sys.stdout, str(len(update_list)) + " packages needs an update!"
 	print >>sys.stderr, "apt-get install",
-	runtime = os.path.getmtime('/tmp/security_check') - os.path.getatime('/tmp/security_check')
+	runtime = 0
+	if os.path.isfile('/tmp/security_check'):
+		runtime = os.path.getmtime('/tmp/security_check') - os.path.getatime('/tmp/security_check')
 	file = open('/tmp/security_check', 'w')
 	for item in update_list:
 		print >>sys.stderr, item,

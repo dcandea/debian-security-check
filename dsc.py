@@ -61,6 +61,9 @@ if __name__ == "__main__":
 
     cache = apt.Cache()
     feed = feedparser.parse("http://www.debian.org/security/dsa-long")
+    if feed.bozo:
+        print >>sys.stderr, "Feed exception: ", feed.bozo_exception
+        sys.exit(2)
 
     for i in feed.entries:
         srcpackage = i.title.split()[1]
